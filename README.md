@@ -135,18 +135,3 @@ godirect = GoDirect(ble_com_port='COM9')
 GNU General Public License v3 (GPLv3)
 
 Vernier products are designed for educational use. Our products are not designed nor are they recommended for any industrial, medical, or commercial process such as life support, patient diagnosis, control of a manufacturing process, or industrial testing of any kind.
-
-## Maintainer
-
-Generate pydocs from the docs folder with:
-```
-python3 -m pydoc -w godirect
-python3 -m pydoc -w godirect.sensor
-# etc
-```
-
-Upload to the PyPI test server:
-```
-python3 setup.py sdist bdist_wheel 
-python3 -m twine upload dist/*
-```

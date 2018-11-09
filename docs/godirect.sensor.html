@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module godirect.sensor</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="godirect.html"><font color="#ffffff">godirect</font></a>.sensor</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="../godirect/sensor.py">sensor.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="godirect.sensor.html#GoDirectSensor">GoDirectSensor</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GoDirectSensor">class <strong>GoDirectSensor</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#GoDirectSensor">GoDirectSensor</a>(info)<br>
+&nbsp;<br>
+<a href="#GoDirectSensor">GoDirectSensor</a>&nbsp;encapsulates&nbsp;the&nbsp;sensor&nbsp;information&nbsp;fetched&nbsp;from&nbsp;the&nbsp;GoDirect<br>
+device&nbsp;for&nbsp;each&nbsp;sensor.&nbsp;This&nbsp;class&nbsp;also&nbsp;maintains&nbsp;a&nbsp;list&nbsp;of&nbsp;measurmenets<br>
+read&nbsp;from&nbsp;the&nbsp;sensor.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GoDirectSensor-__init__"><strong>__init__</strong></a>(self, info)</dt><dd><tt>Create&nbsp;a&nbsp;<a href="#GoDirectSensor">GoDirectSensor</a>&nbsp;<a href="builtins.html#object">object</a>.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;info:&nbsp;list&nbsp;of&nbsp;sensor&nbsp;information&nbsp;read&nbsp;from&nbsp;the&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="GoDirectSensor-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Returns&nbsp;a&nbsp;pretty&nbsp;str&nbsp;for&nbsp;this&nbsp;sensor&nbsp;suitable&nbsp;for&nbsp;printing</tt></dd></dl>
+
+<dl><dt><a name="GoDirectSensor-clear"><strong>clear</strong></a>(self)</dt><dd><tt>Clear&nbsp;the&nbsp;values&nbsp;list</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>enabled</strong></dt>
+<dd><tt>bool:&nbsp;True&nbsp;if&nbsp;the&nbsp;sensor&nbsp;is&nbsp;enabled,&nbsp;False&nbsp;if&nbsp;it&nbsp;wont&nbsp;be&nbsp;used&nbsp;in&nbsp;data&nbsp;collection</tt></dd>
+</dl>
+<dl><dt><strong>max_measurement</strong></dt>
+<dd><tt>float:&nbsp;the&nbsp;largest&nbsp;measurment&nbsp;expected&nbsp;in&nbsp;sensor&nbsp;units</tt></dd>
+</dl>
+<dl><dt><strong>max_measurement_period</strong></dt>
+<dd><tt>int:&nbsp;the&nbsp;largest&nbsp;measurment&nbsp;period&nbsp;allowed,&nbsp;in&nbsp;ms</tt></dd>
+</dl>
+<dl><dt><strong>measurement_period_granularity</strong></dt>
+<dd><tt>int:&nbsp;the&nbsp;granularity&nbsp;of&nbsp;the&nbsp;measurment&nbsp;period&nbsp;allowed,&nbsp;in&nbsp;ms</tt></dd>
+</dl>
+<dl><dt><strong>measurement_uncertainty</strong></dt>
+<dd><tt>float:&nbsp;the&nbsp;expected&nbsp;uncertainty&nbsp;of&nbsp;each&nbsp;measurement&nbsp;in&nbsp;sensor&nbsp;units</tt></dd>
+</dl>
+<dl><dt><strong>min_measurement</strong></dt>
+<dd><tt>float:&nbsp;the&nbsp;smallest&nbsp;measurement&nbsp;expected&nbsp;in&nbsp;sensor&nbsp;units</tt></dd>
+</dl>
+<dl><dt><strong>min_measurement_period</strong></dt>
+<dd><tt>int:&nbsp;the&nbsp;smallest&nbsp;measurment&nbsp;period&nbsp;allowed,&nbsp;in&nbsp;ms</tt></dd>
+</dl>
+<dl><dt><strong>mutual_exclusion_mask</strong></dt>
+<dd><tt>int:&nbsp;a&nbsp;sensor&nbsp;mask&nbsp;that&nbsp;determines&nbsp;which&nbsp;sensors&nbsp;cannot&nbsp;be&nbsp;enabled<br>
+simultaneously</tt></dd>
+</dl>
+<dl><dt><strong>numeric_measurement_type</strong></dt>
+<dd><tt>int:&nbsp;0&nbsp;=&nbsp;Real64,&nbsp;1&nbsp;=&nbsp;Int32</tt></dd>
+</dl>
+<dl><dt><strong>sampling_mode</strong></dt>
+<dd><tt>int:&nbsp;0&nbsp;=&nbsp;Periodic,&nbsp;1&nbsp;=&nbsp;APeriodic</tt></dd>
+</dl>
+<dl><dt><strong>sensor_description</strong></dt>
+<dd><tt>str:&nbsp;the&nbsp;name&nbsp;of&nbsp;this&nbsp;sensor,&nbsp;e.g.&nbsp;'Force'</tt></dd>
+</dl>
+<dl><dt><strong>sensor_id</strong></dt>
+<dd><tt>str:&nbsp;the&nbsp;sensor&nbsp;id</tt></dd>
+</dl>
+<dl><dt><strong>sensor_number</strong></dt>
+<dd><tt>int:&nbsp;the&nbsp;sensor&nbsp;number&nbsp;of&nbsp;this&nbsp;sensor,&nbsp;used&nbsp;for&nbsp;selecting&nbsp;sensors&nbsp;to&nbsp;start&nbsp;data&nbsp;collection</tt></dd>
+</dl>
+<dl><dt><strong>sensor_units</strong></dt>
+<dd><tt>str:&nbsp;the&nbsp;units&nbsp;used&nbsp;for&nbsp;this&nbsp;sensor,&nbsp;e.g.&nbsp;'N'</tt></dd>
+</dl>
+<dl><dt><strong>typ_measurement_period</strong></dt>
+<dd><tt>int:&nbsp;the&nbsp;typical&nbsp;measurment&nbsp;period&nbsp;in&nbsp;ms,&nbsp;used&nbsp;by&nbsp;start()&nbsp;method&nbsp;with&nbsp;no<br>
+period&nbsp;specified.</tt></dd>
+</dl>
+<dl><dt><strong>value</strong></dt>
+<dd><tt>float:&nbsp;get&nbsp;the&nbsp;latest&nbsp;measurment&nbsp;read&nbsp;from&nbsp;the&nbsp;sensor&nbsp;or&nbsp;0&nbsp;if&nbsp;no&nbsp;measurments&nbsp;have&nbsp;been&nbsp;read</tt></dd>
+</dl>
+<dl><dt><strong>values</strong></dt>
+<dd><tt>float[]:&nbsp;a&nbsp;list&nbsp;of&nbsp;values&nbsp;collected&nbsp;from&nbsp;the&nbsp;sensor</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

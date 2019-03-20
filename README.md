@@ -2,6 +2,7 @@
 
 A Python module for reading from [Vernier Go Direct® Sensors](https://www.vernier.com/products/sensors/go-direct-sensors/) using USB or BLE.
 
+Take a look at the [godirect-examples repository](https://github.com/VernierST/godirect-examples) for ideas and a number of helpful examples.
 
 ## Requirements
 
@@ -126,8 +127,20 @@ logging.getLogger('pygatt').setLevel(logging.DEBUG)
 The pygatt module uses the BGAPI backend to communicate with the BLE dongle.
 You might have to specify the COM port assigned to the BLE dongle if the auto-detection fails.
 
-```python
+```
+python
 godirect = GoDirect(ble_com_port='COM9')
+```
+
+## Linux
+
+In order to communicate with Go Direct devices over USB on Linux systems, you will need to provide a udev rule to grant the proper permissions for the device. You can create such a rule in the proper directory with this command:
+
+```
+sudo su -c 'cat <<EOT >/etc/udev/rules.d/vstlibusb.rules
+SUBSYSTEM=="usb", ATTRS{idVendor}=="08f7", MODE="0666"
+SUBSYSTEM=="usb_device", ATTRS{idVendor}=="08f7", MODE="0666"
+EOT'
 ```
 
 ## License

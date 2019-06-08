@@ -304,6 +304,9 @@ class GoDirectDevice(ABC):
 
 	def _GDX_dec_rolling_counter(self):
 		self._rolling_counter -= 1
+		# Roll over to behave like an unsigned byte
+		if self._rolling_counter == -1:
+			self._rolling_counter = 0xFF
 		return self._rolling_counter
 
 	def _GDX_calculate_checksum(self, buff):

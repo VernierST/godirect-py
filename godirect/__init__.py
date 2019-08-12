@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+import importlib
 
 from .device import GoDirectDevice
 from .sensor import GoDirectSensor
@@ -16,6 +17,8 @@ class GoDirect:
 
 	def __init__(self, use_ble=True, use_usb=True, ble_com_port=None):
 		""" Construct a new 'GoDirect' object and initialize backends
+		
+		Uses Bleak if found, otherwise vernierpygatt BGAPI for BLE. HIDAPI is used for USB.
 
 		Args:
 	        use_ble (bool): set to False to disable the BLE backend
@@ -30,15 +33,16 @@ class GoDirect:
 		self._usb_backend = None
 		self._devices = []
 		if use_ble == True:
-			try:
+			bleak_spec = importlib.util.find_spec("bleak")
+			found_bleak = bleak_spec is not None
+		
+			if found_bleak:
+				from .backend_bleak import GoDirectBackendBleak
+				self._ble_backend = GoDirectBackendBleak()
+			else:
 				from .backend_ble import GoDirectBackendBLE
-				try:
-					self._ble_backend = GoDirectBackendBLE(ble_com_port)
-				except:
-					self._ble_backend = None
-					self._logger.info("No Bluegiga BGAPI adapter detected.")
-			except:
-				self._logger.error("Bluetooth will not work until vernierpygatt is installed.")
+				self._ble_backend = GoDirectBackendBLE(ble_com_port)
+
 		if use_usb == True:
 			try:
 				from .backend_usb import GoDirectBackendUSB

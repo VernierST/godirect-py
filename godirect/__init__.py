@@ -12,7 +12,7 @@ class GoDirect:
 	interact with Vernier GoDirect devices.
 	"""
 
-	VERSION = "1.0.4"
+	VERSION = "1.0.5"
 
 	BLE_AUTO_CONNECT_RSSI_THRESHOLD = -50  #closer to zero is a stronger signal
 
@@ -23,6 +23,7 @@ class GoDirect:
 
 		Args:
 	        use_ble (bool): set to False to disable the BLE backend
+			use_ble_bg (bool): manual override to force use of BlueGiga over Bleak
         	use_usb (bool): set to False to disable the USB backend
 			ble_com_port (str): set to a COM port to override the auto detection in windows, e.g. 'COM9'
 		Returns:

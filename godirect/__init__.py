@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
-import importlib
+import importlib.util
+import platform
 
 from .device import GoDirectDevice
 from .sensor import GoDirectSensor
@@ -15,7 +16,7 @@ class GoDirect:
 
 	BLE_AUTO_CONNECT_RSSI_THRESHOLD = -50  #closer to zero is a stronger signal
 
-	def __init__(self, use_ble=True, use_usb=True, ble_com_port=None):
+	def __init__(self, use_ble=True, use_ble_bg=False, use_usb=True, ble_com_port=None):
 		""" Construct a new 'GoDirect' object and initialize backends
 		
 		Uses Bleak if found, otherwise vernierpygatt BGAPI for BLE. HIDAPI is used for USB.
@@ -35,8 +36,8 @@ class GoDirect:
 		if use_ble == True:
 			bleak_spec = importlib.util.find_spec("bleak")
 			found_bleak = bleak_spec is not None
-		
-			if found_bleak:
+
+			if found_bleak and (platform.system() + ' ' + platform.release() == 'Windows 10') and use_ble_bg == False:
 				from .backend_bleak import GoDirectBackendBleak
 				self._ble_backend = GoDirectBackendBleak()
 			else:

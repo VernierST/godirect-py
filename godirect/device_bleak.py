@@ -128,7 +128,7 @@ class GoDirectDeviceBleak(GoDirectDevice):
 		buflen = len(self._response_buffer)
 
 		# Check if we have received the complete packet
-		self._logger.debug("Recieve buffer length: %i Expected packet length: %i",len,int(self._response_buffer[1]))
+		self._logger.debug("Receive buffer length: %i Expected packet length: %i",buflen,int(self._response_buffer[1]))
 
 		if buflen >= 1 and buflen == int(self._response_buffer[1]):
 			self._responses.put(self._response_buffer, block=True, timeout=5000)

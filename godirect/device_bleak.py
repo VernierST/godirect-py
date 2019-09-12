@@ -7,17 +7,17 @@ import asyncio
 from .device import GoDirectDevice
 
 class GoDirectDeviceBleak(GoDirectDevice):
-	""" GoDirectDeviceBLE overrides GoDirectDevice with BLE specific functions for connecting,
-	disconnecting, writing, and reading.
+	""" GoDirectDeviceBleak overrides GoDirectDevice with bleak module functions for connecting,
+	disconnecting, writing, and reading. The bleak module supports native BLE radios.
 	"""
 	uuidCommand  = UUID("f4bf14a6-c7d5-4b6d-8aa8-df1a7c83adcb")
 	uuidResponse = UUID("b41e6675-a329-40e0-aa01-44d2f444babe")
 
 	def __init__(self, backend):
-		""" Create a GoDirectBackendBLE object
+		""" Create a GoDirectBackendBleak object
 		Args:
 			backend: the GoDirectBackend object to use with this device, should be
-			GoDirectBackendBLE
+			GoDirectBackendBleak
 		"""
 		self._logger = logging.getLogger('godirect')
 		self._device = None

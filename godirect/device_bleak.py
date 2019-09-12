@@ -1,13 +1,17 @@
 import logging
 import queue
 from uuid import UUID
+from bleak import BleakClient
+import asyncio
 
 from .device import GoDirectDevice
 
-class GoDirectDeviceBLE(GoDirectDevice):
+class GoDirectDeviceBleak(GoDirectDevice):
 	""" GoDirectDeviceBLE overrides GoDirectDevice with BLE specific functions for connecting,
 	disconnecting, writing, and reading.
 	"""
+	uuidCommand  = UUID("f4bf14a6-c7d5-4b6d-8aa8-df1a7c83adcb")
+	uuidResponse = UUID("b41e6675-a329-40e0-aa01-44d2f444babe")
 
 	def __init__(self, backend):
 		""" Create a GoDirectBackendBLE object
@@ -19,30 +23,51 @@ class GoDirectDeviceBLE(GoDirectDevice):
 		self._device = None
 		self._responses = queue.Queue()
 		self._response_buffer = bytearray()
+		self._loop = asyncio.get_event_loop()
 		super().__init__(backend)
 
+	async def _async_is_connected(self):
+		return await self._device.is_connected()
+		
 	def is_connected(self):
 		""" Returns True if connected, False otherwise.
 		"""
-		if self._device == None:
+		if self._device != None:
+			if self._loop.run_until_complete(self._async_is_connected()):
+				return True
+		return False
+	
+	async def _async_connect(self):
+		await self._device.connect()
+		x = await self._device.is_connected()
+		if not x:
 			return False
-		return True
+			
+		await self._device.start_notify(self.uuidResponse, self._notify_callback)
 
 	def _connect(self):
 		""" Open this device
 		Returns:
 			True on success, False otherwise
 		"""
-		self._device = self._backend.connect(self)
-		self._discover_services()
+		self._device = BleakClient(self._id)
+		self._loop.run_until_complete(self._async_connect())
 		return True
 
+	async def _async_disconnect(self):
+		await self._device.stop_notify(self.uuidResponse)
+		await self._device.disconnect()
+		
 	def _disconnect(self):
 		""" Close this device
 		"""
-		self._device.disconnect()
+		if self._device != None:
+			self._loop.run_until_complete(self._async_disconnect())
 		self._device = None
 
+	async def _async_write(self, uuid, data_to_write, wait_for_response):
+		await self._device.write_gatt_char(uuid, data_to_write, wait_for_response) 
+		
 	def _write(self, buff):
 		""" Write data to this device
 		Args:
@@ -63,7 +88,7 @@ class GoDirectDeviceBLE(GoDirectDevice):
 			self._logger.debug(str)
 
 			try:
-				self._device.char_write(self._char_command, data_to_write, wait_for_response=False)
+				self._loop.run_until_complete(self._async_write(self.uuidCommand, data_to_write, wait_for_response=False))
 			except:
 				self._logger.debug("ERROR: BLE write failed")
 				return False
@@ -92,35 +117,6 @@ class GoDirectDeviceBLE(GoDirectDevice):
 		return response
 
 	def _discover_services(self):
-		#uuidService  = "d91714ef-28b9-4f91-ba16-f0d9a604f112"
-		uuidCommand  = UUID("f4bf14a6-c7d5-4b6d-8aa8-df1a7c83adcb")
-		uuidResponse = UUID("b41e6675-a329-40e0-aa01-44d2f444babe")
-
-		self._logger.debug("Discovering characteristics ...")
-
-		chars = self._device.discover_characteristics()
-
-		if uuidCommand in chars:
-			self._logger.debug("Found GDX command characteristic %s", uuidCommand)
-			self._char_command = uuidCommand
-		else:
-			self._logger.error("ERROR: GDX command characteristic discovery failed!")
-			return False
-
-		if uuidResponse in chars:
-			self._logger.debug("Found GDX response characteristic %s", uuidResponse)
-			self._char_response = uuidResponse
-		else:
-			self._logger.error("ERROR: GDX response characteristic discovery failed!")
-			return False
-
-		try:
-			self._device.subscribe(uuidResponse, callback=self._notify_callback)
-			self._logger.debug("Subscribed to GDX response notifications")
-		except:
-			self._logger.error("ERROR: subscribe to GDX response failed!")
-			return False
-
 		return True
 
 	def _notify_callback(self, handle, value):

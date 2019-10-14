@@ -343,8 +343,9 @@ class GoDirectDevice(ABC):
 		timeout = 5000
 		start_time = time.time()
 		while True:
-			timeout = timeout - (start_time - time.time())
-			if timeout < 0:
+			timeout = timeout - (time.time() - start_time) * 1000
+			if timeout < 1:
+				self._logger.info("Timeout")
 				break
 			response = self._GDX_read_blocking(timeout=timeout)
 			if len(response) < 2:
@@ -361,8 +362,9 @@ class GoDirectDevice(ABC):
 		timeout = 5000
 		start_time = time.time()
 		while True:
-			timeout = timeout - (start_time - time.time())
-			if timeout < 0:
+			timeout = timeout - (time.time() - start_time)*1000
+			if timeout < 1:
+				self._logger.info("Timeout")
 				break
 			response = self._GDX_read_blocking(timeout=timeout)
 			if len(response) < 2:
@@ -374,7 +376,12 @@ class GoDirectDevice(ABC):
 		return False
 
 	def _GDX_read_measurement(self, timeout):
+		start_time = time.time()
 		while True:
+			timeout = timeout - (time.time() - start_time) * 1000
+			if timeout < 1:
+				self._logger.info("Timeout")
+				break
 			response = self._GDX_read_blocking(timeout)
 			if len(response) < 5:
 				self._logger.info("Packet too short")

@@ -343,8 +343,9 @@ class GoDirectDevice(ABC):
 		timeout = 5000
 		start_time = time.time()
 		while True:
-			timeout = timeout - (start_time - time.time())
-			if timeout < 0:
+			timeout = timeout - (time.time() - start_time) * 1000
+			if timeout < 1:
+				self._logger.info("Timeout in _GDX_write_and_get_response")
 				break
 			response = self._GDX_read_blocking(timeout=timeout)
 			if len(response) < 2:
@@ -361,8 +362,9 @@ class GoDirectDevice(ABC):
 		timeout = 5000
 		start_time = time.time()
 		while True:
-			timeout = timeout - (start_time - time.time())
-			if timeout < 0:
+			timeout = timeout - (time.time() - start_time)*1000
+			if timeout < 1:
+				self._logger.info("Timeout in _GDX_write_and_check_response")
 				break
 			response = self._GDX_read_blocking(timeout=timeout)
 			if len(response) < 2:
@@ -374,7 +376,14 @@ class GoDirectDevice(ABC):
 		return False
 
 	def _GDX_read_measurement(self, timeout):
+		start_time = time.time()
+		timedout = False
 		while True:
+			timeout = timeout - (time.time() - start_time) * 1000
+			if timeout < 1:
+				self._logger.info("Timeout in _GDX_read_measurement")
+				timedout = True
+				break
 			response = self._GDX_read_blocking(timeout)
 			if len(response) < 5:
 				self._logger.info("Packet too short")
@@ -387,6 +396,8 @@ class GoDirectDevice(ABC):
 				self._logger.info("Ignoring non-supported measurement type")
 				continue
 			break
+		if timedout == True:
+			return False
 		return self._GDX_handle_measurement(response)
 
 	def _GDX_handle_measurement(self, response):

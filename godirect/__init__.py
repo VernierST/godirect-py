@@ -38,7 +38,8 @@ class GoDirect:
 			bleak_spec = importlib.util.find_spec("bleak")
 			found_bleak = bleak_spec is not None
 
-			if found_bleak and (platform.system() + ' ' + platform.release() == 'Windows 10') and use_ble_bg == False:
+			#if found_bleak and (platform.system() + ' ' + platform.release() == 'Windows 10') and use_ble_bg == False:
+			if found_bleak and use_ble_bg == False:
 				from .backend_bleak import GoDirectBackendBleak
 				self._ble_backend = GoDirectBackendBleak()
 			else:

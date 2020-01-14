@@ -3,6 +3,7 @@ import queue
 from uuid import UUID
 from bleak import BleakClient
 import asyncio
+import traceback
 
 from .device import GoDirectDevice
 
@@ -50,7 +51,7 @@ class GoDirectDeviceBleak(GoDirectDevice):
 		Returns:
 			True on success, False otherwise
 		"""
-		self._device = BleakClient(self._id)
+		self._device = BleakClient(self._id, loop=self._loop)
 		self._loop.run_until_complete(self._async_connect())
 		return True
 
@@ -66,6 +67,7 @@ class GoDirectDeviceBleak(GoDirectDevice):
 		self._device = None
 
 	async def _async_write(self, uuid, data_to_write, wait_for_response):
+		data_to_write = bytes(data_to_write)
 		await self._device.write_gatt_char(uuid, data_to_write, wait_for_response) 
 		
 	def _write(self, buff):
@@ -91,6 +93,7 @@ class GoDirectDeviceBleak(GoDirectDevice):
 				self._loop.run_until_complete(self._async_write(self.uuidCommand, data_to_write, wait_for_response=False))
 			except:
 				self._logger.debug("ERROR: BLE write failed")
+				traceback.print_exc()
 				return False
 
 			lengthRemaining = lengthRemaining - lengthChunk
@@ -99,6 +102,9 @@ class GoDirectDeviceBleak(GoDirectDevice):
 			self._logger.debug("lengthRemaining %i offset %i", lengthRemaining, offset)
 		return True
 
+	async def _wait(self):
+		await asyncio.sleep(0.01, self._loop)
+
 	def _read(self, timeout):
 		""" Read data from this device while blocking for up to timeout ms
 		Args:
@@ -106,9 +112,16 @@ class GoDirectDeviceBleak(GoDirectDevice):
 		Returns:
 			bytearray: data received from device
 		"""
-		try:
-			response = self._responses.get(block=True,timeout=timeout)
-		except:
+
+		response = None
+		for i in range(0,int(timeout/10)):
+			try:
+				response = self._responses.get(block=False)
+				break
+			except:
+				self._loop.run_until_complete(self._wait())
+
+		if response == None:
 			return bytearray()
 
 		str = "BLE READ: <<<"

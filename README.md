@@ -23,7 +23,7 @@ Automatically install the `extras` support dependencies for both USB and BLE.
 pip install godirect[usb,ble]
 ```
 
-In order to use the native Windows 10 BLE stack, Bleak must be installed.  To install:
+In order to use the native Windows 10 or Linux BLE stack, Bleak must be installed.  To install:
 ```bash
 pip install bleak
 ```

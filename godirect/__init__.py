@@ -12,7 +12,7 @@ class GoDirect:
 	interact with Vernier GoDirect devices.
 	"""
 
-	VERSION = "1.0.5"
+	VERSION = "1.0.6"
 
 	BLE_AUTO_CONNECT_RSSI_THRESHOLD = -50  #closer to zero is a stronger signal
 
@@ -37,8 +37,8 @@ class GoDirect:
 		if use_ble == True:
 			bleak_spec = importlib.util.find_spec("bleak")
 			found_bleak = bleak_spec is not None
-
-			if found_bleak and (platform.system() + ' ' + platform.release() == 'Windows 10') and use_ble_bg == False:
+			
+			if found_bleak and (platform.system() != 'Darwin') and use_ble_bg == False:
 				from .backend_bleak import GoDirectBackendBleak
 				self._ble_backend = GoDirectBackendBleak()
 			else:

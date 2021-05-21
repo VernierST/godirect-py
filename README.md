@@ -18,9 +18,9 @@ The following Python modules are recommended for `godirect`. They will only be i
 
 ## Installation
 
-Automatically install the `extras` support dependencies for both USB and BLE.
+Automatically install all the dependencies for both USB and native BLE.
 ```bash
-pip install godirect[usb,ble]
+pip install godirect
 ```
 
 In order to use the Bluegiga BLE dongle, vernierpygatt must be installed. This is a fork of the pygatt project with a fix for the BGAPI on Windows. To install:

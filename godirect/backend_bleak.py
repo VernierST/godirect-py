@@ -1,4 +1,3 @@
-import pygatt
 import logging
 from uuid import UUID
 import asyncio

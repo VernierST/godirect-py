@@ -13,7 +13,7 @@ automatically as dependencies when installing `godirect` via pip.
 
 The following Python modules are recommended for `godirect`. They will only be installed if they are specified as `extras` when installing `godirect` via pip. See below.
 
-* vernierpygatt (fork of the pygatt project with a fix for the BGAPI on Windows)
+* bleak (native Bluetooth Low Energy stack for Mac, Windows and Linux)
 * hidapi (USB HID device support)
 
 ## Installation
@@ -23,9 +23,9 @@ Automatically install the `extras` support dependencies for both USB and BLE.
 pip install godirect[usb,ble]
 ```
 
-In order to use the native Windows 10 or Linux BLE stack, Bleak must be installed.  To install:
+In order to use the Bluegiga BLE dongle, vernierpygatt must be installed. This is a fork of the pygatt project with a fix for the BGAPI on Windows. To install:
 ```bash
-pip install bleak
+pip install vernierpygatt
 ```
 
 ## Installation and Usage

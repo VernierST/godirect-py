@@ -50,17 +50,17 @@
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt><a href="#GoDirect">GoDirect</a>(use_ble=True,&nbsp;use_ble_bg=False,&nbsp;use_usb=True,&nbsp;ble_com_port=None)<br>
 &nbsp;<br>
-The&nbsp;godirect&nbsp;module&nbsp;wraps&nbsp;the&nbsp;hidapi&nbsp;and&nbsp;pygatt&nbsp;modules&nbsp;to&nbsp;create&nbsp;an&nbsp;easy&nbsp;way&nbsp;to<br>
+The&nbsp;godirect&nbsp;module&nbsp;wraps&nbsp;the&nbsp;hidapi&nbsp;and&nbsp;bleak&nbsp;modules&nbsp;to&nbsp;create&nbsp;an&nbsp;easy&nbsp;way&nbsp;to<br>
 interact&nbsp;with&nbsp;Vernier&nbsp;<a href="#GoDirect">GoDirect</a>&nbsp;devices.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="GoDirect-__init__"><strong>__init__</strong></a>(self, use_ble=True, use_ble_bg=False, use_usb=True, ble_com_port=None)</dt><dd><tt>Construct&nbsp;a&nbsp;new&nbsp;'<a href="#GoDirect">GoDirect</a>'&nbsp;<a href="builtins.html#object">object</a>&nbsp;and&nbsp;initialize&nbsp;backends<br>
 &nbsp;<br>
-Uses&nbsp;Bleak&nbsp;if&nbsp;found,&nbsp;otherwise&nbsp;vernierpygatt&nbsp;BGAPI&nbsp;for&nbsp;BLE.&nbsp;HIDAPI&nbsp;is&nbsp;used&nbsp;for&nbsp;USB.<br>
+Uses&nbsp;Bleak&nbsp;for&nbsp;BLE.&nbsp;HIDAPI&nbsp;is&nbsp;used&nbsp;for&nbsp;USB.<br>
 &nbsp;<br>
 Args:<br>
 use_ble&nbsp;(bool):&nbsp;set&nbsp;to&nbsp;False&nbsp;to&nbsp;disable&nbsp;the&nbsp;BLE&nbsp;backend<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use_ble_bg&nbsp;(bool):&nbsp;manual&nbsp;override&nbsp;to&nbsp;force&nbsp;use&nbsp;of&nbsp;BlueGiga&nbsp;over&nbsp;Bleak<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use_ble_bg&nbsp;(bool):&nbsp;manual&nbsp;override&nbsp;to&nbsp;force&nbsp;use&nbsp;of&nbsp;BlueGiga&nbsp;(vernierpygatt&nbsp;over&nbsp;Bleak)<br>
 use_usb&nbsp;(bool):&nbsp;set&nbsp;to&nbsp;False&nbsp;to&nbsp;disable&nbsp;the&nbsp;USB&nbsp;backend<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ble_com_port&nbsp;(str):&nbsp;set&nbsp;to&nbsp;a&nbsp;COM&nbsp;port&nbsp;to&nbsp;override&nbsp;the&nbsp;auto&nbsp;detection&nbsp;in&nbsp;windows,&nbsp;e.g.&nbsp;'COM9'<br>
 Returns:<br>
@@ -102,7 +102,7 @@ Data descriptors defined here:<br>
 Data and other attributes defined here:<br>
 <dl><dt><strong>BLE_AUTO_CONNECT_RSSI_THRESHOLD</strong> = -50</dl>
 
-<dl><dt><strong>VERSION</strong> = '1.0.6'</dl>
+<dl><dt><strong>VERSION</strong> = '1.1.0'</dl>
 
 </td></tr></table></td></tr></table>
 </body></html>

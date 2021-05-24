@@ -26,21 +26,15 @@ class GoDirectDeviceBleak(GoDirectDevice):
 		self._response_buffer = bytearray()
 		self._loop = asyncio.get_event_loop()
 		super().__init__(backend)
-
-	async def _async_is_connected(self):
-		return await self._device.is_connected()
 		
 	def is_connected(self):
 		""" Returns True if connected, False otherwise.
 		"""
-		if self._device != None:
-			if self._loop.run_until_complete(self._async_is_connected()):
-				return True
-		return False
+		return self._device.is_connected
 	
 	async def _async_connect(self):
 		await self._device.connect()
-		x = await self._device.is_connected()
+		x = self._device.is_connected
 		if not x:
 			return False
 			

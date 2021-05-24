@@ -8,22 +8,22 @@ from .sensor import GoDirectSensor
 from .backend import GoDirectBackend
 
 class GoDirect:
-	""" The godirect module wraps the hidapi and pygatt modules to create an easy way to
+	""" The godirect module wraps the hidapi and bleak modules to create an easy way to
 	interact with Vernier GoDirect devices.
 	"""
 
-	VERSION = "1.0.7"
+	VERSION = "1.1.0"
 
 	BLE_AUTO_CONNECT_RSSI_THRESHOLD = -50  #closer to zero is a stronger signal
 
 	def __init__(self, use_ble=True, use_ble_bg=False, use_usb=True, ble_com_port=None):
 		""" Construct a new 'GoDirect' object and initialize backends
 		
-		Uses Bleak if found, otherwise vernierpygatt BGAPI for BLE. HIDAPI is used for USB.
+		Uses Bleak for BLE. HIDAPI is used for USB.
 
 		Args:
 	        use_ble (bool): set to False to disable the BLE backend
-			use_ble_bg (bool): manual override to force use of BlueGiga over Bleak
+			use_ble_bg (bool): manual override to force use of BlueGiga (vernierpygatt over Bleak)
         	use_usb (bool): set to False to disable the USB backend
 			ble_com_port (str): set to a COM port to override the auto detection in windows, e.g. 'COM9'
 		Returns:
@@ -35,10 +35,8 @@ class GoDirect:
 		self._usb_backend = None
 		self._devices = []
 		if use_ble == True:
-			bleak_spec = importlib.util.find_spec("bleak")
-			found_bleak = bleak_spec is not None
-			
-			if found_bleak and (platform.system() != 'Darwin') and use_ble_bg == False:
+
+			if use_ble_bg == False:
 				from .backend_bleak import GoDirectBackendBleak
 				self._ble_backend = GoDirectBackendBleak()
 			else:

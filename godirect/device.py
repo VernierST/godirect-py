@@ -54,8 +54,8 @@ class GoDirectDevice(ABC):
 		self._pid = ""
 		self._rssi = ""
 		self._status = ""
-		self._master_cpu_version = ""
-		self._slave_cpu_version = ""
+		self._primary_cpu_version = ""
+		self._secondary_cpu_version = ""
 		self._battery_level_percent = 0
 		self._charger_state = self.CHARGER_STATE_ERROR
 		self._serial_number = ""
@@ -623,20 +623,20 @@ class GoDirectDevice(ABC):
 		status_struct = '<xxxxxxBBBBHBBHBB'
 		info = struct.unpack(status_struct, response)
 		(status,spare,
-		 majorVersionMasterCPU,minorVersionMasterCPU,buildNumMasterCPU,
-		 majorVersionSlaveCPU,minorVersionSlaveCPU,buildNumSlaveCPU,
+		 majorVersionPrimaryCPU,minorVersionPrimaryCPU,buildNumPrimaryCPU,
+		 majorVersionSecondaryCPU,minorVersionSecondaryCPU,buildNumSecondaryCPU,
 		 batteryLevelPercent,chargerState) = info
 
 		self._status = status
-		self._master_cpu_version = str(majorVersionMasterCPU)+'.'+str(minorVersionMasterCPU)+'.'+str(buildNumMasterCPU)
-		self._slave_cpu_version = str(majorVersionSlaveCPU)+'.'+str(minorVersionSlaveCPU)+'.'+str(buildNumSlaveCPU)
+		self._primary_cpu_version = str(majorVersionPrimaryCPU)+'.'+str(minorVersionPrimaryCPU)+'.'+str(buildNumPrimaryCPU)
+		self._secondary_cpu_version = str(majorVersionSecondaryCPU)+'.'+str(minorVersionSecondaryCPU)+'.'+str(buildNumSecondaryCPU)
 		self._battery_level_percent = batteryLevelPercent
 		self._charger_state = chargerState
 
 		self._logger.info("Device status:")
 		self._logger.info("  Status: %i", status)
-		self._logger.info("  Master FW version: %i%s%i%s%i", majorVersionMasterCPU,".",minorVersionMasterCPU,".",buildNumMasterCPU)
-		self._logger.info("  Slave FW version: %i%s%i%s%i", majorVersionSlaveCPU,".",minorVersionSlaveCPU,".",buildNumSlaveCPU)
+		self._logger.info("  Primary FW version: %i%s%i%s%i", majorVersionPrimaryCPU,".",minorVersionPrimaryCPU,".",buildNumPrimaryCPU)
+		self._logger.info("  Secondary FW version: %i%s%i%s%i", majorVersionSecondaryCPU,".",minorVersionSecondaryCPU,".",buildNumSecondaryCPU)
 		self._logger.info("  Battery percent: %i%s", batteryLevelPercent,'%')
 		self._logger.info("  Charger state: %i", chargerState)
 
@@ -658,8 +658,8 @@ class GoDirectDevice(ABC):
 		info = struct.unpack(info_struct, response)
 		(OrderCode,SerialNumber,DeviceName,
 		 manufacturerId,manufacturedYear,ManufacturedMonth,ManufacturedDay,
-		 majorVersionMasterCPU,minorVersionMasterCPU,buildNumMasterCPU,
-		 majorVersionSlaveCPU,minorVersionSlaveCPU,buildNumSlaveCPU,
+		 majorVersionPrimaryCPU,minorVersionPrimaryCPU,buildNumPrimaryCPU,
+		 majorVersionSecondaryCPU,minorVersionSecondaryCPU,buildNumSecondaryCPU,
 		 Addr5,Addr4,Addr3,Addr2,Addr1,Addr0,
 		 NVMemSize,DeviceDescription) = info
 
@@ -679,8 +679,8 @@ class GoDirectDevice(ABC):
 		self._logger.info("  Device name: %s", DeviceName.decode("utf-8"))
 		self._logger.info("  Mfg ID: %s", manufacturerId)
 		self._logger.info("  Mfg Date: %i%s%i%s%i",ManufacturedMonth,"/",ManufacturedDay,"/",manufacturedYear)
-		self._logger.info("  Master FW version: %i%s%i%s%i",majorVersionMasterCPU,".",minorVersionMasterCPU,".",buildNumMasterCPU)
-		self._logger.info("  Slave FW version: %i%s%i%s%i",majorVersionSlaveCPU,".",minorVersionSlaveCPU,".",buildNumSlaveCPU)
+		self._logger.info("  Primary FW version: %i%s%i%s%i",majorVersionPrimaryCPU,".",minorVersionPrimaryCPU,".",buildNumPrimaryCPU)
+		self._logger.info("  Secondary FW version: %i%s%i%s%i",majorVersionSecondaryCPU,".",minorVersionSecondaryCPU,".",buildNumSecondaryCPU)
 		self._logger.info("  BLE address: %s%s%s%s%s%s%s%s%s%s%s",format(Addr0,'02x'),":",format(Addr1,'02x'),":",format(Addr2,'02x'),":",format(Addr3,'02x'),":",format(Addr4,'02x'),":",format(Addr5,'02x'))
 		self._logger.info("  NVRAM size: %i%s",NVMemSize, 'bytes')
 
@@ -768,16 +768,16 @@ class GoDirectDevice(ABC):
 		return self._status
 
 	@property
-	def master_cpu_version(self):
+	def primary_cpu_version(self):
 		""" str: the device firmware version
 		"""
-		return self._master_cpu_version
+		return self._primary_cpu_version
 
 	@property
-	def slave_cpu_version(self):
+	def secondary_cpu_version(self):
 		""" str: the BLE firmware version
 		"""
-		return self._slave_cpu_version
+		return self._secondary_cpu_version
 
 	@property
 	def battery_level_percent(self):

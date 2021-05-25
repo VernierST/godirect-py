@@ -2,7 +2,7 @@
 
 A Python module for reading from [Vernier Go Direct® Sensors](https://www.vernier.com/products/sensors/go-direct-sensors/) connected to USB or your system's on-board bluetooth radio. The module has been tested on Windows 10, macOS, and various Linux distros.
 
-Take a look at the [godirect-examples repository](https://github.com/VernierST/godirect-examples/tree/master/python) for ideas and a number of helpful examples.
+Take a look at the [godirect-examples repository](https://github.com/VernierST/godirect-examples/tree/main/python) for ideas and a number of helpful examples.
 
 ## Requirements
 
@@ -21,7 +21,7 @@ pip install godirect
 
 ## Installation and Usage
 
-Go to our [Getting Started with Vernier Go Direct Sensors and Python document](https://github.com/VernierST/godirect-examples/blob/master/python/readme.md) for detailed information regarding installation and usage of the godirect module.
+Go to our [Getting Started with Vernier Go Direct Sensors and Python document](https://github.com/VernierST/godirect-examples/blob/main/python/readme.md) for detailed information regarding installation and usage of the godirect module.
 
 ## Legacy Support for Bluegiga Dongle
 

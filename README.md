@@ -8,7 +8,6 @@ Take a look at the [godirect-examples repository](https://github.com/VernierST/g
 
 The following Python modules are required for `godirect`. They will be installed automatically as dependencies when installing `godirect` via pip.
 
-* pexpect
 * bleak (native Bluetooth Low Energy stack for Mac, Windows and Linux)
 * hidapi (USB HID device support)
 
@@ -25,10 +24,7 @@ Go to our [Getting Started with Vernier Go Direct Sensors and Python document](h
 
 ## Legacy Support for Bluegiga Dongle
 
-Prior to version 1.1.0, some platforms required a Bluegiga BLE dongle to connect over BLE. While we recommend using the native BLE radio (through bleak), the old functionality has been left in the library. In order to use the Bluegiga BLE dongle, vernierpygatt must be installed. This is a fork of the pygatt project with a fix for the BGAPI on Windows. To install:
-```bash
-pip install vernierpygatt
-```
+Prior to version 1.1.0, some platforms required a Bluegiga BLE dongle to connect over BLE. While we recommend using the native BLE radio (through bleak), the old functionality has been left in the library. In order to use the Bluegiga BLE dongle, vernierpygatt must be installed. This is a fork of the pygatt project with a fix for the BGAPI on Windows. See [the vernierpygatt PyPi page](https://pypi.org/project/vernierpygatt/) for details.
 
 ## License
 

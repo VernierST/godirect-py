@@ -20,7 +20,7 @@ class GoDirectBackendBleak(GoDirectBackend):
 		devices = []
 		bleak_devices = await discover()
 		for d in bleak_devices:
-			if d.name[0:3] == 'GDX':
+			if d and d.name and d.name[0:3] == 'GDX':
 				device = GoDirectDeviceBleak(self)
 				device.id = d.address
 				device.type = "BLE"

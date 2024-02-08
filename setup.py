@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="godirect",
-    version="1.1.3",
+    version="1.1.4",
     author="Vernier Software and Technology",
     author_email="info@vernier.com",
     description="Library to interface with GoDirect devices via USB and BLE",

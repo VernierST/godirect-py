@@ -156,7 +156,7 @@ class GoDirectDevice(ABC):
 		if period == None:
 			period = self.get_default_period()
 			if period < 100:
-			   period = 100
+				period = 100
 			self._logger.info("Autoset sample period (ms): %i", period)
 		self._sample_period_in_milliseconds = period
 
@@ -404,36 +404,40 @@ class GoDirectDevice(ABC):
 		self._GDX_dump("MEASUREMENT: ", response)
 
 		value_count = 0
-		sensors = []
+		sensors = {}
 		format_str = "<f"
 		index = 0
 
 		measurement_type = response[4]
 		if measurement_type == self.MEASUREMENT_TYPE_NORMAL_REAL32:
+			# this is the standard measurement type - such as GDX-HD
 			self._GDX_dump("REAL32: ", response[9:])
 			sensor_mask = struct.unpack("<H",response[5:7])[0]
 			value_count = struct.unpack("<b",response[7:8])[0]
 			sensors = self._get_sensors_with_mask(sensor_mask)
 			index = 9
 		elif measurement_type == self.MEASUREMENT_TYPE_WIDE_REAL32:
+			# this is the measurment type for photogate Gate State
 			self._GDX_dump("WIDE REAL32: ", response[11:])
 			sensor_mask = struct.unpack("<HH",response[5:9])[0]
 			value_count = struct.unpack("<b",response[9:10])[0]
 			sensors = self._get_sensors_with_mask(sensor_mask)
 			index = 11
 		elif measurement_type == self.MEASUREMENT_TYPE_SINGLE_CHANNEL_REAL32 or measurement_type == self.MEASUREMENT_TYPE_APERIODIC_REAL32:
+			# this is the measurement type for photogate velocity, acceleration
 			self._GDX_dump("SINGLE REAL32: ", response[8:])
 			sensor_number = struct.unpack("<b",response[6:7])[0]
 			value_count = struct.unpack("<b",response[7:8])[0]
 			index = 8
-			sensors[0] = self._sensors[sensor_number]
+			sensors = self._sensors
 		elif measurement_type == self.MEASUREMENT_TYPE_SINGLE_CHANNEL_INT32 or measurement_type == self.MEASUREMENT_TYPE_APERIODIC_INT32:
+			# this is the measurement type for GDX-RAD
 			self._GDX_dump("SINGLE INT32: ", response[8:])
 			sensor_number = struct.unpack("<b",response[6:7])[0]
 			value_count = struct.unpack("<b",response[7:8])[0]
 			index = 8
 			format_str = "<i"
-			sensors[0] = self._sensors[sensor_number]
+			sensors = self._sensors
 		else:
 			self._logger.info("Unknown measurement type")
 			return False

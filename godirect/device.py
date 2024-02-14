@@ -410,34 +410,35 @@ class GoDirectDevice(ABC):
 
 		measurement_type = response[4]
 		if measurement_type == self.MEASUREMENT_TYPE_NORMAL_REAL32:
-			# this is the standard measurement type - such as GDX-HD
+			# standard measurement type, e.g. GDX-HD
 			self._GDX_dump("REAL32: ", response[9:])
 			sensor_mask = struct.unpack("<H",response[5:7])[0]
 			value_count = struct.unpack("<b",response[7:8])[0]
 			sensors = self._get_sensors_with_mask(sensor_mask)
 			index = 9
 		elif measurement_type == self.MEASUREMENT_TYPE_WIDE_REAL32:
-			# this is the measurment type for photogate Gate State
 			self._GDX_dump("WIDE REAL32: ", response[11:])
 			sensor_mask = struct.unpack("<HH",response[5:9])[0]
 			value_count = struct.unpack("<b",response[9:10])[0]
 			sensors = self._get_sensors_with_mask(sensor_mask)
 			index = 11
 		elif measurement_type == self.MEASUREMENT_TYPE_SINGLE_CHANNEL_REAL32 or measurement_type == self.MEASUREMENT_TYPE_APERIODIC_REAL32:
-			# this is the measurement type for photogate velocity, acceleration
+			# measurement type for photogate velocity and acceleration
 			self._GDX_dump("SINGLE REAL32: ", response[8:])
 			sensor_number = struct.unpack("<b",response[6:7])[0]
 			value_count = struct.unpack("<b",response[7:8])[0]
+			mask = self._get_sensor_mask()
+			sensors = self._get_sensors_with_mask(mask)
 			index = 8
-			sensors = self._sensors
 		elif measurement_type == self.MEASUREMENT_TYPE_SINGLE_CHANNEL_INT32 or measurement_type == self.MEASUREMENT_TYPE_APERIODIC_INT32:
-			# this is the measurement type for GDX-RAD
+			# measurement type for photogate gate state, radiation counting
 			self._GDX_dump("SINGLE INT32: ", response[8:])
 			sensor_number = struct.unpack("<b",response[6:7])[0]
 			value_count = struct.unpack("<b",response[7:8])[0]
+			mask = self._get_sensor_mask()
+			sensors = self._get_sensors_with_mask(mask)
 			index = 8
 			format_str = "<i"
-			sensors = self._sensors
 		else:
 			self._logger.info("Unknown measurement type")
 			return False

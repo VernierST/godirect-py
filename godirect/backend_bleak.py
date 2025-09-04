@@ -1,7 +1,9 @@
 import logging
 from uuid import UUID
 import asyncio
-from bleak import discover
+from bleak import BleakScanner
+from bleak.backends.device import BLEDevice
+from bleak.backends.scanner import AdvertisementData
 
 from .backend import GoDirectBackend
 from .device_bleak import GoDirectDeviceBleak
@@ -18,14 +20,14 @@ class GoDirectBackendBleak(GoDirectBackend):
 
 	async def _async_scan(self):
 		devices = []
-		bleak_devices = await discover()
-		for d in bleak_devices:
-			if d and d.name and d.name[0:3] == 'GDX':
+		bleak_devices = await BleakScanner.discover(return_adv=True, timeout=3.5)
+		for d, a in bleak_devices.values():			
+			if d and a and d.name and d.name[0:3] == 'GDX':
 				device = GoDirectDeviceBleak(self)
 				device.id = d.address
 				device.type = "BLE"
 				device.set_name_from_advertisement(d.name)
-				device.rssi = d.rssi
+				device.rssi = a.rssi
 				devices.append(device)
 		return devices
 		

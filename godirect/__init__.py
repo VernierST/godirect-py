@@ -12,7 +12,7 @@ class GoDirect:
 	interact with Vernier GoDirect devices.
 	"""
 
-	VERSION = "1.1.4"
+	VERSION = "1.2.0"
 
 	BLE_AUTO_CONNECT_RSSI_THRESHOLD = -50  #closer to zero is a stronger signal
 

@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "godirect"
-version = "1.1.4"
+version = "1.2.1"
 description = "Library to interface with GoDirect devices via USB and BLE"
 readme = "README.md"
-license = {text = "GPL v3.0"}
+license = "GPL-3.0"
 authors = [
     {name = "Vernier Software and Technology", email = "info@vernier.com"}
 ]
@@ -17,7 +17,6 @@ maintainers = [
 keywords = ["godirect", "vernier", "usb", "ble", "bluetooth", "sensors"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
 ]
 requires-python = ">=3.7"

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "godirect"
+version = "1.2.1"
+description = "Library to interface with GoDirect devices via USB and BLE"
+readme = "README.md"
+license = "GPL-3.0"
+authors = [
+    {name = "Vernier Software and Technology", email = "info@vernier.com"}
+]
+maintainers = [
+    {name = "Vernier Software and Technology", email = "info@vernier.com"}
+]
+keywords = ["godirect", "vernier", "usb", "ble", "bluetooth", "sensors"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.7"
+dependencies = [
+    "hidapi",
+    "bleak"
+]
+
+[project.urls]
+Homepage = "https://github.com/vernierst/godirect-py"
+Repository = "https://github.com/vernierst/godirect-py"
+
+[tool.setuptools.packages.find]
+include = ["godirect*"] 

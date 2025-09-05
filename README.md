@@ -26,6 +26,30 @@ Go to our [Getting Started with Vernier Go Direct Sensors and Python document](h
 
 Prior to version 1.1.0, some platforms required a Bluegiga BLE dongle to connect over BLE. While we recommend using the native BLE radio (through bleak), the old functionality has been left in the library. In order to use the Bluegiga BLE dongle, vernierpygatt must be installed. This is a fork of the pygatt project with a fix for the BGAPI on Windows. See [the vernierpygatt PyPi page](https://pypi.org/project/vernierpygatt/) for details.
 
+## Local builds
+
+In order to explore and contribute to this module, you can modify this module, build and install it locally.
+
+_# Uninstall any installed version_
+```bash
+pip uninstall godirect
+```
+
+_# Install the build tool (if you have not already)_
+```bash
+pip install build
+```
+
+_# Build the module_
+```bash
+python -m build
+```
+
+_# Install the module_
+```bash
+pip install .
+```
+
 ## License
 
 GNU General Public License v3 (GPLv3)
